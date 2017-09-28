@@ -34,7 +34,7 @@ body, html {
 	  if(isset($_SESSION['username'])) {
 		  echo '<a href="dashBoard.html" class="w3-bar-item w3-button"><i class="fa fa-user"></i> DASHBOARD</a>';
 	  } else {
-		  echo '<a href="login.html" class="w3-bar-item w3-button"><i class="fa fa-user"></i> LOGIN</a>';
+		  echo '<a href="login.php" class="w3-bar-item w3-button"><i class="fa fa-user"></i> LOGIN</a>';
 	  }
 	  ?>
 	  <a href="search.html" class="w3-bar-item w3-button"><i class="fa fa-search"></i> SEARCH</a>
@@ -46,7 +46,7 @@ body, html {
   <h1 class="w3-center">Welcome <?php echo $_SESSION['username']; ?>!</h1>
   <h4 class="w3-center">Please select what you want to do...</h4>
   <p><a href = "changePassword.html">Change Password </a>
-  <p><a href = "createEvent.html">Create New Event </a>
+  <p><a href = "createTask.php">Create New Task </a>
   <p><a href = "viewMyEvent.html">View All Created Events</a>
   <p><a href = "viewBiddedEvents.html">View All Bidded Events</a>
   <p><a href = "logout.html">Logout</a>
