@@ -1,0 +1,35 @@
+//Stored Procedure for add user
+
+CREATE FUNCTION add_user(username VARCHAR(64), password VARCHAR(128),email VARCHAR(128),firstName VARCHAR(128),lastName VARCHAR(32),dob DATE,gender VARCHAR(6)) 
+    RETURNS void AS $$
+    BEGIN
+      INSERT INTO account (username,pw,email,firstname,lastname,dob,gender) VALUES (username,password,email,firstName,lastName,dob,gender);
+    END;
+    $$ LANGUAGE plpgsql;
+  
+//Tables
+  
+CREATE TABLE account(
+	userID serial PRIMARY KEY,
+	username VARCHAR(64) UNIQUE,
+	pw VARCHAR(255) NOT NULL,
+	email VARCHAR(128) UNIQUE,
+	firstName VARCHAR(128) NOT NULL,
+	lastName VARCHAR(32) NOT NULL,
+	dob DATE NOT NULL CHECK (date_part('year',dob) > 18),
+	gender VARCHAR(6) NOT NULL CHECK (gender = 'Male' OR gender = 'Female')
+);
+    
+CREATE TABLE task(
+    taskID SERIAL,
+    username VARCHAR(64),
+    title VARCHAR(255) NOT NULL,
+    description VARCHAR(512) NOT NULL,
+    type VARCHAR(64) NOT NULL,
+    price INT NOT NULL,
+    startDate DATE NOT NULL CHECK (date >= current_date),
+    endDate DATE NOT NULL CHECK (date >= current_date),
+    time TIME NOT NULL,
+    PRIMARY KEY (taskID, username),
+    FOREIGN KEY (username) REFERENCES account(username) ON DELETE CASCADE
+);
