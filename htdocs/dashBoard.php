@@ -46,7 +46,7 @@ body, html {
 <div class="container-fluid w3-container w3-light-grey" style="padding:96px" id="home">
   <div class="row content">
     <div class="col-sm-3 sidenav hidden-xs">
-      <h2>Welcome <?php echo $_SESSION["username"]; ?></h2>
+      <h2>Welcome <?php echo $_SESSION["user"]; ?></h2>
       <ul class="nav nav-pills nav-stacked">
         <li class="active"><a href="#section1">Dashboard</a></li>
         <li><a href="#">View all</a></li>
@@ -73,9 +73,11 @@ body, html {
           <tbody>
             <?php 
               $db = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
-              $result = pg_query($db, "SELECT * FROM task 
-                WHERE (startDate >= date_trunc('week', CURRENT_TIMESTAMP)
-                AND startDate < date_trunc('week', CURRENT_TIMESTAMP + interval '1 week'))"); //query for upcoming tasks for the week
+              $curUser = $_SESSION["user"];
+              $result = pg_query($db, "SELECT * FROM task t
+                WHERE (t.startDate >= date_trunc('week', CURRENT_TIMESTAMP)
+                AND t.startDate < date_trunc('week', CURRENT_TIMESTAMP + interval '1 week')
+                AND t.username = '$curUser')"); //query for upcoming tasks for the week
   
               if (pg_num_rows($result) > 0) {
   
@@ -103,8 +105,9 @@ body, html {
             <h4>Completed</h4>
             <?php
                $db = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
-              $result = pg_query($db, "SELECT COUNT (*) AS total FROM task 
-                WHERE enddate < date_trunc('day', CURRENT_TIMESTAMP)"); //query for task that have pass the end date
+               $curUser = $_SESSION["user"];
+              $result = pg_query($db, "SELECT COUNT (*) AS total FROM task t
+                WHERE t.enddate < date_trunc('day', CURRENT_TIMESTAMP) AND t.username = '$curUser';"); //query for task that have pass the end date
               $data = pg_fetch_assoc($result);
 
               if ($data["total"] > 0) {
@@ -119,13 +122,41 @@ body, html {
         <div class="col-sm-3">
           <div class="well">
             <h4>Accepted</h4>
-            <p>100 Million</p> 
+            <?php
+               $db = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
+               $curUser = $_SESSION["user"];
+              $result = pg_query($db, "SELECT COUNT (*) AS total FROM task t, bid b 
+                WHERE t.username = '$curUser' 
+                AND b.taskOwner = '$curUser'
+                AND b.status = 'Accepted';"); //query for task that have pass the end date
+              $data = pg_fetch_assoc($result);
+
+              if ($data["total"] > 0) {
+                echo "<p> ". $data["total"] ." </p>";
+              } else {
+                echo "No accepted task.";
+              }
+
+            ?>  
           </div>
         </div>
         <div class="col-sm-3">
           <div class="well">
             <h4>Bidded</h4>
-            <p>10 Million</p> 
+            <?php
+               $db = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
+               $curUser = $_SESSION["user"];
+              $result = pg_query($db, "SELECT COUNT (*) AS total FROM account a, bid b 
+                WHERE a.username = '$curUser' AND a.username = b.bidder"); //query for task that have pass the end date
+              $data = pg_fetch_assoc($result);
+
+              if ($data["total"] > 0) {
+                echo "<p> ". $data["total"] ." </p>";
+              } else {
+                echo "No task bidded.";
+              }
+
+            ?> 
           </div>
         </div>
         <div class="col-sm-3">
