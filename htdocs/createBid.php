@@ -12,13 +12,13 @@
         $date = date("Y/m/d");
 		
       if (isset($_POST['bid'])) { 
-        $check1 = pg_query($db, "SELECT bidder FROM bid WHERE bidder = '$_SESSION[user]' AND taskid = '$_POST[taskid]'");
+        $check1 = pg_query($db, "SELECT bidder FROM bid WHERE bidder = '$_SESSION[user]' AND taskid = '$_POST[test]'");
         if(pg_num_rows($check1)>0) {
-          pg_query("DELETE FROM bid WHERE bidder = '$_SESSION[user]' AND taskid = '$taskid'"); //remove duplicates for a specific task as 1 user can only bid once for each task
+          pg_query("DELETE FROM bid WHERE bidder = '$_SESSION[user]' AND taskid = '$_POST[test]'"); //remove duplicates for a specific task as 1 user can only bid once for each task
         }
 
 		$command = "INSERT INTO bid (taskID,bidder,taskOwner,status,bidDate,bidAmt)
-					VALUES('$taskid','$_SESSION[user]','$row[username]','Pending', '$date', '$_POST[Amount]')";
+					VALUES('$_POST[task]','$_SESSION[user]','$_POST[tasker]','Pending', '$date', '$_POST[Amount]')";
         $check = pg_query($db, $command);
         if($check) 
           $echo1 = '<p>Bid Successful!</p>';
@@ -80,6 +80,8 @@ body, html {
   <div class="w3-row-padding" style="margin-top:64px padding:128px 16px">
     <div class="w3-content" align="center">
       <form action="createBid.php" method="POST" >
+			<p><input type="hidden" name="task" value = "<?php echo $taskid ?>"></p>
+			<p><input type="hidden" name="tasker" value = "<?php echo $row["username"] ?>"></p>
 		    <p><input class="w3-input w3-border" type="number" placeholder="Amount" name="Amount"></p>
           <p>
 		  		
