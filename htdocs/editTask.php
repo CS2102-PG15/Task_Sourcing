@@ -55,11 +55,12 @@ body, html {
 
 <!-- Create Task -->
 <div class="w3-container w3-light-grey" style="padding:96px" id="home">
-  <h1 class="w3-center">Edit</h1>
+  <?php print_r($row) ?>
+  <h1 class="w3-center">Edit Task</h1>
   <p class="w3-center w3-large">Update your task!</p>
   <div class="w3-row-padding" style="margin-top:64px padding:128px 16px">
     <div class="w3-content" align="center">
-      <form action="viewTask.php" method="POST" >
+      <form action="editTask.php" method="POST" >
         
         <div class="row">
           <span>Task Title</span>
@@ -78,23 +79,23 @@ body, html {
         <div class="row">
           <div class="col-6">
             <span>Start Date</span>
-            <input class="w3-input w3-border" type="date" required name="starttaskdate" value="<?php echo $row['startDate']; ?>">
+            <input class="w3-input w3-border" type="date" required name="starttaskdate" value="<?php echo $row['startdate']; ?>">
           </div>
 
           <div class="col-6">
             <span>End Date</span>  
-            <input class="w3-input w3-border" type="date" required name="endtaskdate" value="<?php echo $row['endDate']; ?>">
+            <input class="w3-input w3-border" type="date" required name="endtaskdate" value="<?php echo $row['enddate']; ?>">
           </div>     
         </div>
 
         <div class="row">
           <div class="col-6">
             <span>Start Time</span>
-            <input class="w3-input w3-border" type="time" required name="starttasktime" value="<?php echo $row['startTime']; ?>">
+            <input class="w3-input w3-border" type="time" required name="starttasktime" value="<?php echo $row['starttime']; ?>">
           </div>
           <div class="col-6">
             <span>End Time</span>  
-            <input class="w3-input w3-border" type="time" required name="endtasktime" value="<?php echo $row['endTime']; ?>">
+            <input class="w3-input w3-border" type="time" required name="endtasktime" value="<?php echo $row['endtime']; ?>">
           </div>
         </div>
         
@@ -106,14 +107,14 @@ body, html {
 
           <div class="col-6">
             <label>Task Type</label>
-            <select class="w3-input w3-border" required name = "tasktype" selected="<?php echo $row['endDate']; ?>">
+            <select class="w3-input w3-border" required name = "tasktype">
             <option value = "" disabled> --- Select Task Type --- </option>
-            <option value = "Miscellanous "> Miscellanous </option>
-            <option value = "Housing Agent "> Housing Agent </option>
-            <option value = "Car Washing"> Car Washing </option>
-            <option value = "Education "> Education </option>
-            <option value = "Holiday Planner "> Holiday Planner </option>
-            <option value = "Home"> Home </option>
+            <option <?php if($row['type'] == 'Miscellanous') echo 'selected="selected"'; ?> value = "Miscellanous "> Miscellanous </option>
+            <option <?php if($row['type'] == 'Housing Agent') echo 'selected="selected"'; ?> value = "Housing Agent "> Housing Agent </option>
+            <option <?php if($row['type'] == 'Car Washing') echo 'selected="selected"'; ?> value = "Car Washing"> Car Washing </option>
+            <option <?php if($row['type'] == 'Education') echo 'selected="selected"'; ?> value = "Education "> Education </option>
+            <option <?php if($row['type'] == 'Holiday Planner') echo 'selected="selected"'; ?> value = "Holiday Planner "> Holiday Planner </option>
+            <option <?php if($row['type'] == 'Home') echo 'selected="selected"'; ?> value = "Home"> Home </option>
             </select>
           </div>
         </div>
@@ -134,7 +135,8 @@ body, html {
     // Connect to database. Change pw and dbname as accordingly
     $db     = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
     $rn = $_SESSION['user']; // current session user
-    $result = pg_query($db, "UPDATE task SET title = '$_POST[tasktitle]', description = '$_POST[taskdescription]', type = '$_POST[tasktype]', startDate = '$_POST[starttaskdate]', endDate = '$_POST[endtaskdate]', startTime = '$_POST[starttasktime]', endTime = '$_POST[endtasktime]', price = '$_POST[taskprice]' WHERE taskID = '$taskid' AND userName = '$rn';");
+    $query = "UPDATE task SET title = '$_POST[tasktitle]', description = '$_POST[taskdescription]', type = '$_POST[tasktype]', startdate = '$_POST[starttaskdate]', enddate = '$_POST[endtaskdate]', starttime = '$_POST[starttasktime]', endtime = '$_POST[endtasktime]', price = '$_POST[taskprice]' WHERE taskid = '$taskid' AND username = '$rn'";
+    $result = pg_query($db, $query);
 
     if(!$result) {
       echo "<script>
@@ -147,12 +149,12 @@ body, html {
                 if(startDate > endDate) {
                   alert('Check that your end date is not earlier that your start date');
                 } else {
-                  alert('Error in adding task. Try again!');
+                  alert('Error in updating your task. Try again!');
                 }
               } else if (startDate < today){
                 alert('Check that your start date is not in the past.');
               } else {
-                alert('Error in adding task. Try again!');
+                alert('Error in updating the task. Try again!');
               }
               
             </script>";
