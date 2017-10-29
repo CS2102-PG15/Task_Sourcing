@@ -49,7 +49,6 @@ body, html {
       <h2>Welcome <?php echo $_SESSION["user"]; ?></h2>
       <ul class="nav nav-pills nav-stacked">
         <li class="active"><a href="#section1">Dashboard</a></li>
-        <li><a href="#">View all</a></li>
         <li><a href="createTask.php">Create new task</a></li>
 	<li><a href="viewTask.php">View your task</a></li>
         <li><a href="changePassword.html">Change password</a></li>
