@@ -55,7 +55,6 @@ body, html {
 
 <!-- Create Task -->
 <div class="w3-container w3-light-grey" style="padding:96px" id="home">
-  <?php print_r($row) ?>
   <h1 class="w3-center">Edit Task</h1>
   <p class="w3-center w3-large">Update your task!</p>
   <div class="w3-row-padding" style="margin-top:64px padding:128px 16px">
@@ -118,6 +117,9 @@ body, html {
             </select>
           </div>
         </div>
+
+        <p><input type="hidden" name="taskID" value = "<?php echo $taskid ?>"></p>
+
         <p>
           <button class="w3-button w3-black" type="submit" name = "update">
             <i class="fa fa-pencil"></i> UPDATE
@@ -135,7 +137,7 @@ body, html {
     // Connect to database. Change pw and dbname as accordingly
     $db     = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
     $rn = $_SESSION['user']; // current session user
-    $query = "UPDATE task SET title = '$_POST[tasktitle]', description = '$_POST[taskdescription]', type = '$_POST[tasktype]', startdate = '$_POST[starttaskdate]', enddate = '$_POST[endtaskdate]', starttime = '$_POST[starttasktime]', endtime = '$_POST[endtasktime]', price = '$_POST[taskprice]' WHERE taskid = '$taskid' AND username = '$rn'";
+    $query = "UPDATE task SET title = '$_POST[tasktitle]', description = '$_POST[taskdescription]', type = '$_POST[tasktype]', startdate = '$_POST[starttaskdate]', enddate = '$_POST[endtaskdate]', starttime = '$_POST[starttasktime]', endtime = '$_POST[endtasktime]', price = '$_POST[taskprice]' WHERE taskid = '$_POST[taskID]' AND username = '$rn'";
     $result = pg_query($db, $query);
 
     if(!$result) {
@@ -159,7 +161,10 @@ body, html {
               
             </script>";
     } else {
-      echo "<script> alert('Success!') </script>";
+      echo "<script>
+              alert('Success!');
+              location.href = 'viewTask.php';
+            </script>";
     }
   }  
 ?>
