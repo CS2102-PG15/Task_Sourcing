@@ -24,6 +24,16 @@ body, html {
 .w3-bar .w3-button {
     padding: 20px;
 }
+
+.button-container form,
+.button-container form div {
+    display: inline;
+}
+
+.button-container button {
+    display: inline;
+    vertical-align: middle;
+}
 </style>
 <body>
 
@@ -64,14 +74,24 @@ body, html {
               Description: '.$row["description"]. '</br></br>
             </div>
     <div class="w3-row-padding" style="margin-top:64px padding:128px 16px">
-      <div class="w3-content" align="center">
-        <form action="approveBid.php" method="POST" >
+      <div class="button-container" align="center">
+        <form action="approveBid.php" method="POST">
+          <div>
             <button class="w3-button w3-white w3-border w3-border-blue" type="submit" name = "Display" value="'.$row['taskid'].'"">
                 <i class=" "></i> View Bids Here!
             </button>
-          </p>
+          </div>
+        </form>
+
+        <form action="editTask.php" method="POST">
+          <div>
+            <button class="w3-button w3-white w3-border w3-border-blue" type="submit" name = "Display" value="'.$row['taskid'].'"">
+                <i class=" "></i> Edit task
+            </button>
+          </div>
         </form>
       </div>
+
     </div>';
             }
 ?>
