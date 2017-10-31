@@ -113,13 +113,12 @@
 		<?php
 		include 'navbar.php';
 		?>
-
 		<div class="jumbotron">
 			<div class="container">
 				<p>
 					<h2 style="text-align: center">Browse over 1,000 taskers with the skills you need</h2></br>
 				</p>
-				<form action="search.php" method="get">
+				<form action="search.php" method="GET">
 					<h4>Search for a job:</h4></br>
 					<input type="text" name="title" placeholder="By job title">
 					<h6>
@@ -137,70 +136,74 @@
 			            <h6>By Price: Under <span id="price value"></span></h6>
 						<input type="range" min="1" max="249" class="slider" id="price" name="price">
 					</div></br>
-					<button type="submit" class="w3-button w3-grey">Go!</button>
+					<button type="submit" name = "search" class="w3-button w3-grey">Go!</button>
 				</form>
+				<?php
+					echo $message;
+				?>
 			</div>
 		</div>
-
+		
 		<?php
-		$db     = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
-		$page = $_GET["page"];
-		if ($page=="" || $page=="1"){
-			$page1=0;
-		} else {
-			$page1 = $page*5-5;
-		}
-		
-		$title = $_GET["title"];
-		str_replace("+"," ",$title);
-		
-		$type = $_GET["type"];
-		str_replace("+"," ",$type);
-		
-		$price = $_GET["price"];
-		str_replace("+"," ",$price);
-
-		$filter = array("title"=>$title, "type"=>$type, "price"=>$price);
-		$string = "";
-		foreach($filter as $field => $value) {
-			if ($value == "") {
-				continue;
+		if (isset($_GET['search'])) {
+			$page = $_GET["page"];
+			if ($page =="" || $page == "1") {
+				$page1=0;
 			} else {
-				if ($string !== ""){
-					$string .= " AND ";
-				}
-				if ($field == "price"){
-					$string = $string . $field . " <= " . $value;
-				} else {
-					$string = $string . "UPPER(" . $field . ") LIKE UPPER('" . $value . "')";
-				}		
+				$page1 = $page*5-5;
 			}
-		}
+			
+			$title = $_GET["title"];
+			str_replace("+"," ",$title);
+			
+			$type = $_GET["type"];
+			str_replace("+"," ",$type);
+			
+			$price = $_GET["price"];
+			str_replace("+"," ",$price);
 
-		if ($string == ""){
-			$result = pg_query($db, "SELECT * FROM task LIMIT 10 OFFSET $page1;");
-			$result1 = pg_query($db, "SELECT * FROM task;");
-		} else {
-			$query = "SELECT * FROM task WHERE " . $string . " LIMIT 10 OFFSET $page1;";
-			$query1 = "SELECT * FROM task WHERE " . $string . ";";
-			$result = pg_query($db, $query);
-			$result1 = pg_query($db, $query1);	
-		}
+			$filter = array("title"=>$title, "type"=>$type, "price"=>$price);
+			$string = "";
+			
+			foreach($filter as $field => $value) {
+				if ($value == "") {
+					continue;
+				} else {
+					if ($string !== ""){
+						$string .= " AND ";
+					}
+					if ($field == "price"){
+						$string = $string . $field . " <= " . $value;
+					} else {
+						$string = $string . "UPPER(" . $field . ") LIKE UPPER('" . $value . "')";
+					}		
+				}
+			}
 
-		$row    = pg_fetch_assoc($result);
-		while($row = pg_fetch_array($result)){ ?>
+			$db     = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
+			if ($string == "") {
+				$result = pg_query($db, "SELECT * FROM task LIMIT 10 OFFSET $page1;");
+				$result1 = pg_query($db, "SELECT * FROM task;");
+			} else {
+				$query = "SELECT * FROM task WHERE " . $string . " LIMIT 10 OFFSET $page1;";
+				$query1 = "SELECT * FROM task WHERE " . $string . ";";
+				$result = pg_query($db, $query);
+				$result1 = pg_query($db, $query1);	
+			}
+
+			while($row    = pg_fetch_assoc($result)){ ?>
 			<p><div class="container">   
 				<div class="row">
 					<div class="col-sm-12">
 						<div class="panel panel-info">
-							<div class="panel-heading"><b> <?php echo $row["title"]; ?></b></div>
+							<div class="panel-heading"><b> <?php echo $row['title']; ?></b></div>
 							<div class="panel-body">
-								Type: <?php echo $row["type"]; ?></br>
-								Date: <?php echo $row["date"]; ?></br>
-								Time: <?php echo $row["time"]; ?></br>
-								Price: <?php echo $row["price"]; ?></br>
-								Description: <?php echo $row["description"]; ?></br></br>
-								<p><a href="search.php?taskid=<?php echo $row["taskid"] ?>&username=<?php echo $row["username"] ?>" class="w3-button w3-white w3-border w3-border-blue">Click here to bid!</a></p>
+								Type: <?php echo $row['type']; ?></br>
+								Date: <?php echo $row['startdate']; ?></br>
+								Time: <?php echo $row['starttime']; ?></br>
+								Price: <?php echo $row['price']; ?></br>
+								Description: <?php echo $row['description']; ?></br></br>
+								<p><a href="createBid.php?taskid=<?php echo $row['taskid'] ?>&username=<?php echo $row['username'] ?>" class="w3-button w3-white w3-border w3-border-blue">Click here to bid!</a></p>
 							</div>
 						</div>
 					</div>
@@ -221,6 +224,7 @@
 			$nextPage = $page + 1;
 		} else {
 			$nextPage = $page;
+		}
 		}
 		?>
 
@@ -252,6 +256,9 @@
 			output.innerHTML = this.value;
 		}
 	</script>
-
+		
+		<?php
+		include 'footer.html';
+		?>
 </body>
 </html>
