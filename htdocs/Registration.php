@@ -42,7 +42,6 @@ body, html {
 				if ($state == 0) {
 					$_SESSION['user'] = $_POST[Username];
 					$_SESSION['name'] = $_POST[Firstname] + $_POST[Lastname];
-					$_SESSION['isAdmin'] = 'no';
 			
 					header("Location: dashBoard.php");
 					exit();

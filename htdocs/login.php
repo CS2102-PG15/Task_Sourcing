@@ -5,25 +5,17 @@
     $db     = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");	
   if (isset($_POST['login'])) { 
 		//$password = password_hash($_POST[Password],PASSWORD_DEFAULT);
-        $check = pg_query($db, "SELECT pw FROM account WHERE username = '$_POST[Username]'");
+        $check = pg_query($db, "SELECT pw, isAdmin FROM account WHERE username = '$_POST[Username]'");
 		$checkData = pg_num_rows($check);
-		/*
-		$checkPass = pg_query($db, "SELECT username FROM account WHERE username ='$_POST[Username]' AND pw='$_POST[Password]'");
-        $checkPass = pg_num_rows($checkPass);
-         if($checkPass>0) {
-			$_SESSION['user'] = $_POST[Username];
-            header("Location: dashBoard.php");
-            exit();       
-        }
-		
-        else{
-            $echo1 = '<p>Wrong password or username, Please sign up or try again!</p>';
-        }
-		*/
+
 		if ($checkData > 0) {
 			$hashedPw = pg_fetch_row($check); //Should this be a while loop?
 			
 			if (password_verify($_POST['Password'],$hashedPw[0])) {
+				if ($hashedPw[1] == "t") {
+					$_SESSION["isAdmin"] = "True";
+				} else {
+				}
 				$_SESSION["user"] = $_POST["Username"];
 				header("Location: dashBoard.php");
 				exit();   
