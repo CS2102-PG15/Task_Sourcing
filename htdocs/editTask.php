@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <?php
 	session_start();
-  $_POST['taskid'] = $_POST['Display'];
   $taskid = $_POST['taskid'];
+  $user = $_POST['user'];
   // Connect to the database. Please change the password and dbname in the following line accordingly
+  
   $db     = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
-  $result = pg_query($db, "SELECT * FROM task WHERE taskID = '$taskid' AND userName = '$_SESSION[user]'");
+  $result = pg_query($db, "SELECT * FROM task WHERE taskID = '$taskid' AND userName = '$user'");
   $row = pg_fetch_assoc($result);
 ?>
 <html>

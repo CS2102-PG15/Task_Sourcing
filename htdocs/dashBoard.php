@@ -47,12 +47,22 @@ body, html {
   <div class="row content">
     <div class="col-sm-3 sidenav hidden-xs">
       <h2>Welcome <?php echo $_SESSION["user"]; ?></h2>
-      <ul class="nav nav-pills nav-stacked">
-        <li class="active"><a href="#section1">Dashboard</a></li>
-        <li><a href="createTask.php">Create new task</a></li>
-	<li><a href="viewTask.php">View your task</a></li>
-        <li><a href="changePassword.html">Change password</a></li>
-        <li><a href="logout.php">Logout</a></li>
+	        <ul class="nav nav-pills nav-stacked">
+			<li class="active"><a href="#section1">Dashboard</a></li>
+	  <?php
+	  if(isset($_SESSION['isAdmin'])) {
+			echo '<li><a href="viewAllTasks.php">View All Tasks</a></li>';
+			echo '<li><a href="viewAllUsers.php">View All Users</a></li>';
+			echo '<li><a href="changePassword.html">Change password</a></li>';
+			echo '<li><a href="logout.php">Logout</a></li>';
+	  } else {
+
+			echo '<li><a href="createTask.php">Create new task</a></li>';
+			echo '<li><a href="viewTask.php">View your task</a></li>';
+			echo '<li><a href="changePassword.html">Change password</a></li>';
+			echo '<li><a href="logout.php">Logout</a></li>';
+		}
+	  ?>
       </ul><br>
     </div>
     <br>
