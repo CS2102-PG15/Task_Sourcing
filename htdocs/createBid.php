@@ -3,7 +3,7 @@
     session_start();
     // Connect to the database. Please change the password and dbname in the following line accordingly
         $curruser = $_SESSION["user"]; //Person that wants to bid
-        $taskcreator = $_POST["username"]; // Task owner
+        $taskcreator = $_POST["user"]; // Task owner
         $taskid = $_POST["taskid"];
 		
         $db     = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
@@ -12,10 +12,13 @@
         $date = date("Y/m/d");
 		
       if (isset($_POST['bid'])) { 
-        $check1 = pg_query($db, "SELECT bidder FROM bid WHERE bidder = '$_SESSION[user]' AND taskid = '$_POST[test]'");
-        if(pg_num_rows($check1)>0) {
-          pg_query("DELETE FROM bid WHERE bidder = '$_SESSION[user]' AND taskid = '$_POST[test]'"); //remove duplicates for a specific task as 1 user can only bid once for each task
-        }
+        /*$check1 = pg_query($db, "SELECT bidder FROM bid WHERE bidder = '$_SESSION[user]' AND taskid = $taskid");
+        $data = pg_fetch_assoc($check1);
+        if(pg_num_rows($data)>0) {
+          pg_query($db, "DELETE FROM bid WHERE bidder = '$_SESSION[user]' AND taskid = $taskid"); //remove duplicates for a specific task as 1 user can only bid once for each task
+        }*/
+
+         $delResult = pg_query($db, "DELETE FROM bid WHERE bidder = '$curruser' AND taskid = '$_POST[task]'"); //remove duplicates for a specific task as 1 user can only bid once for each task
 
 		$command = "INSERT INTO bid (taskID,bidder,taskOwner,status,bidDate,bidAmt)
 					VALUES('$_POST[task]','$_SESSION[user]','$_POST[tasker]','Pending', '$date', '$_POST[Amount]')";

@@ -204,8 +204,8 @@
 								Price: <?php echo $row['price']; ?></br>
 								Description: <?php echo $row['description']; ?></br></br>
 								<p>        <form action="createBid.php" method="POST" >
-        									<input type = "hidden" name = "user" value = "'.$row["username"].'" />
-          									<input type = "hidden" name = "taskid" value = "'.$row["taskid"].'" />
+        									<input type = "hidden" name = "user" value = <?php echo $row["username"] ?> />
+          									<input type = "hidden" name = "taskid" value = <?php echo $row["taskid"] ?> />
             										<button class="w3-button w3-white w3-border w3-border-blue" type="submit" name = "accept">
                 									<i class=" "></i> Bid!
             										</button>
