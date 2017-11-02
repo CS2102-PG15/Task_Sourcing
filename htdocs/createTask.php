@@ -105,8 +105,8 @@ body, html {
             <option value = "Miscellaneous"> Miscellaneous </option>
             <option value = "Housing Agent"> Housing Agent </option>
             <option value = "Car Washing"> Car Washing </option>
-            <option value = "Education "> Education </option>
-            <option value = "Holiday Planner "> Holiday Planner </option>
+            <option value = "Education"> Education </option>
+            <option value = "Holiday Planner"> Holiday Planner </option>
             <option value = "Home"> Home </option>
             </select>
           </div>
