@@ -102,7 +102,7 @@ body, html {
             <label>Task Type</label>
             <select class="w3-input w3-border" required name = "tasktype">
             <option selected value = "" disabled> --- Select Task Type --- </option>
-            <option value = "Miscellanous "> Miscellanous </option>
+            <option value = "Miscellaneous "> Miscellaneous </option>
             <option value = "Housing Agent "> Housing Agent </option>
             <option value = "Car Washing"> Car Washing </option>
             <option value = "Education "> Education </option>
