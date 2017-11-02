@@ -53,14 +53,14 @@ body, html {
 	  if(isset($_SESSION['isAdmin'])) {
 			echo '<li><a href="viewAllTasks.php">View All Tasks</a></li>';
 			echo '<li><a href="viewAllUsers.php">View All Users</a></li>';
-			echo '<li><a href="changePassword.html">Change password</a></li>';
+			echo '<li><a href="changePass.php">Change password</a></li>';
 			echo '<li><a href="logout.php">Logout</a></li>';
 	  } else {
 
 			echo '<li><a href="createTask.php">Create new task</a></li>';
 			echo '<li><a href="viewTask.php">View your task</a></li>';
-      echo '<li><a href="viewBid.php">View your bid</a></li>';
-			echo '<li><a href="changePassword.html">Change password</a></li>';
+      			echo '<li><a href="viewBid.php">View your bid</a></li>';
+			echo '<li><a href="changePass.php">Change password</a></li>';
 			echo '<li><a href="logout.php">Logout</a></li>';
 		}
 	  ?>
