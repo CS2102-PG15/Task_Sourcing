@@ -98,6 +98,15 @@ body, html {
 					</button>
 				</form>
 				</th>
+				<th>
+				<form action="viewAllBid.php" method = "POST">
+					<input type = "hidden" name = "user" value = "'.$row["username"].'" />
+					<input type = "hidden" name = "taskid" value = "'.$row["taskid"].'" />
+					<button class="w3-button w3-white w3-border w3-border-blue" type="submit" name = "Display">
+                			<i class=" "></i> Bids
+				</button>
+				</form>
+				</th>
 					</tr>';
 					$index++;
 		  }

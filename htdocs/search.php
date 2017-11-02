@@ -203,7 +203,13 @@
 								Time: <?php echo $row['starttime']; ?></br>
 								Price: <?php echo $row['price']; ?></br>
 								Description: <?php echo $row['description']; ?></br></br>
-								<p><a href="createBid.php?taskid=<?php echo $row['taskid'] ?>&username=<?php echo $row['username'] ?>" class="w3-button w3-white w3-border w3-border-blue">Click here to bid!</a></p>
+								<p>        <form action="createBid.php" method="POST" >
+        									<input type = "hidden" name = "user" value = <?php echo $row["username"] ?> />
+          									<input type = "hidden" name = "taskid" value = <?php echo $row["taskid"] ?> />
+            										<button class="w3-button w3-white w3-border w3-border-blue" type="submit" name = "accept">
+                									<i class=" "></i> Bid!
+            										</button>
+        								   </form></p>
 							</div>
 						</div>
 					</div>
