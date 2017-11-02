@@ -83,6 +83,7 @@ body, html {
           </tr>';
           $index++;
       }
+           echo '</table>';
             }
 ?>
 
