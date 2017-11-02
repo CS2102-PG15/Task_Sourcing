@@ -1,4 +1,5 @@
 
+
   <?php
       session_start();
      // $_POST['user']= 'damien';
@@ -37,7 +38,57 @@ body, html {
       <div class="row">
         <div class="col-sm-12">
           <div class="panel panel-info">
+
 <?php 
+          if(!$result) {
+            echo '<p>There is no bids for this task in the database!</p> </div> </div> </div>';
+          } else {
+        $index = 1;
+        echo '
+      <table style = "width:100%">
+          <tr>
+          <th>S/N</th>
+          <th>Owner</th>
+          <th>Bidder</th>
+          <th>Status</th>
+          <th>Bid Amount</th>
+          <th>Bid Date</th>
+          <th>Edit</th>
+          <th>Delete</th>
+          </tr>';
+            while($row = pg_fetch_assoc($result)) {   //Creates a loop to loop through results
+        echo '<tr>
+        <th>'.$index.'</th>
+        <th>'.$row["taskowner"].'</th>
+        <th>'.$row["bidder"].'</th>
+        <th>'.$row["status"].'</th>
+        <th>'.$row["biddate"].'</th>
+        <th>'.$row["bidamt"].'</th>
+        <th>
+        <form action="editBid.php" method="POST" >
+        <input type = "hidden" name = "bidder" value = "'.$row["bidder"].'" />
+          <input type = "hidden" name = "taskid" value = "'.$row["taskid"].'" />
+            <button class="w3-button w3-white w3-border w3-border-blue" type="submit" name = "accept">
+                <i class=" "></i> Edit bid!
+            </button>
+        </form>
+        </th>
+        <th>
+          <form action="deleteBid.php" method="POST" >
+            <button class="w3-button w3-white w3-border w3-border-blue" type="submit" name = "accept" value = "'.$row["bidder"]. "//" .$row["taskid"].'">
+                <i class=" "></i> Delete bid!
+            </button>
+        </form>
+        </th>
+          </tr>';
+          $index++;
+      }
+            }
+?>
+
+
+
+<?php /*
 
             while($row = pg_fetch_assoc($result)){   //Creates a loop to loop through results
   
@@ -68,7 +119,7 @@ body, html {
         </form></th></tr>
       </div>
     </div>';
-            }
+            }*/
 ?>
         </div>
       </div>
