@@ -59,6 +59,7 @@ body, html {
 
 			echo '<li><a href="createTask.php">Create new task</a></li>';
 			echo '<li><a href="viewTask.php">View your task</a></li>';
+      echo '<li><a href="viewBid.php">View your bid</a></li>';
 			echo '<li><a href="changePassword.html">Change password</a></li>';
 			echo '<li><a href="logout.php">Logout</a></li>';
 		}
