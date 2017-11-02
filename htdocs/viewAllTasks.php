@@ -98,6 +98,7 @@ body, html {
 					</button>
 				</form>
 				</th>
+				<th>
 				<form action="viewAllBid.php" method = "POST">
 					<input type = "hidden" name = "user" value = "'.$row["username"].'" />
 					<input type = "hidden" name = "taskid" value = "'.$row["taskid"].'" />
