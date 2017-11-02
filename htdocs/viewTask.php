@@ -72,7 +72,7 @@ body, html {
 
         <form action="editTask.php" method="POST">
           <div>
-		    <input type = "hidden" name = "user" value = '$_SESSION[user]' />
+		    <input type = "hidden" name = "user" value = '.$_SESSION[user].' />
             <button class="w3-button w3-white w3-border w3-border-blue" type="submit" name = "taskid" value="'.$row['taskid'].'"">
                 <i class=" "></i> Edit task
             </button>

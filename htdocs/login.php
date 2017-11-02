@@ -5,7 +5,8 @@
     $db     = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");	
   if (isset($_POST['login'])) { 
 		//$password = password_hash($_POST[Password],PASSWORD_DEFAULT);
-        $check = pg_query($db, "SELECT pw, isAdmin FROM account WHERE username = '$_POST[Username]'");
+        //$check = pg_query($db, "SELECT login('$_POST[Username]')");
+		$check = pg_query($db, "SELECT pw, isAdmin FROM account WHERE username = '$_POST[Username]'");
 		$checkData = pg_num_rows($check);
 
 		if ($checkData > 0) {

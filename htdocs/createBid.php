@@ -3,19 +3,23 @@
     session_start();
     // Connect to the database. Please change the password and dbname in the following line accordingly
         $curruser = $_SESSION["user"]; //Person that wants to bid
-        $taskcreator = $_GET["username"]; // Task owner
-        $taskid = $_GET["taskid"];
+        $taskcreator = $_POST["user"]; // Task owner
+        $taskid = $_POST["taskid"];
 		
         $db     = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
         $result = pg_query($db, "SELECT * FROM task WHERE taskID = '$taskid' AND userName = '$taskcreator'");
         $row = pg_fetch_assoc($result);
-        $date = date("Y/m/d");
+        date_default_timezone_set('Asia/Singapore');
+		$date = date("Y/m/d");
 		
       if (isset($_POST['bid'])) { 
-        $check1 = pg_query($db, "SELECT bidder FROM bid WHERE bidder = '$_SESSION[user]' AND taskid = '$_POST[test]'");
-        if(pg_num_rows($check1)>0) {
-          pg_query("DELETE FROM bid WHERE bidder = '$_SESSION[user]' AND taskid = '$_POST[test]'"); //remove duplicates for a specific task as 1 user can only bid once for each task
-        }
+        /*$check1 = pg_query($db, "SELECT bidder FROM bid WHERE bidder = '$_SESSION[user]' AND taskid = $taskid");
+        $data = pg_fetch_assoc($check1);
+        if(pg_num_rows($data)>0) {
+          pg_query($db, "DELETE FROM bid WHERE bidder = '$_SESSION[user]' AND taskid = $taskid"); //remove duplicates for a specific task as 1 user can only bid once for each task
+        }*/
+
+         $delResult = pg_query($db, "DELETE FROM bid WHERE bidder = '$curruser' AND taskid = '$_POST[task]'"); //remove duplicates for a specific task as 1 user can only bid once for each task
 
 		$command = "INSERT INTO bid (taskID,bidder,taskOwner,status,bidDate,bidAmt)
 					VALUES('$_POST[task]','$_SESSION[user]','$_POST[tasker]','Pending', '$date', '$_POST[Amount]')";
@@ -23,8 +27,7 @@
         if($check) 
           $echo1 = '<p>Bid Successful!</p>';
         else {
-			$echo1 = $command;
-          //$echo1 = '<p>Bid Unsuccessful! Try again!</p>';         
+          $echo1 = '<p>Bid Unsuccessful! Try again!</p>';         
         }
       }
 ?> 

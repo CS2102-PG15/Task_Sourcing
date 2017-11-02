@@ -120,7 +120,7 @@ body, html {
         </div>
 
         <p><input type="hidden" name="taskID" value = "<?php echo $taskid ?>"></p>
-
+		<p><input type="hidden" name="username" value = "<?php echo $user ?>"></p>
         <p>
           <button class="w3-button w3-black" type="submit" name = "update">
             <i class="fa fa-pencil"></i> UPDATE
@@ -138,7 +138,7 @@ body, html {
     // Connect to database. Change pw and dbname as accordingly
     $db     = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
     $rn = $_SESSION['user']; // current session user
-    $query = "UPDATE task SET title = '$_POST[tasktitle]', description = '$_POST[taskdescription]', type = '$_POST[tasktype]', startdate = '$_POST[starttaskdate]', enddate = '$_POST[endtaskdate]', starttime = '$_POST[starttasktime]', endtime = '$_POST[endtasktime]', price = '$_POST[taskprice]' WHERE taskid = '$_POST[taskID]' AND username = '$rn'";
+    $query = "UPDATE task SET title = '$_POST[tasktitle]', description = '$_POST[taskdescription]', type = '$_POST[tasktype]', startdate = '$_POST[starttaskdate]', enddate = '$_POST[endtaskdate]', starttime = '$_POST[starttasktime]', endtime = '$_POST[endtasktime]', price = '$_POST[taskprice]' WHERE taskid = '$_POST[taskID]' AND username = '$_POST[username]'";
     $result = pg_query($db, $query);
 
     if(!$result) {
