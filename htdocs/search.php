@@ -147,7 +147,8 @@ session_start();
 	</div>
 
 	<?php
-	if (isset($_GET['search'])) {
+	$db     = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
+	//if (isset($_GET['search'])) {
 		$page = $_GET["page"];
 		if ($page =="" || $page == "1") {
 			$page1=0;
@@ -184,7 +185,7 @@ session_start();
 			}
 		}
 
-		$db     = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
+		//$db     = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
 		if ($string == "") {
 			$result = pg_query($db, "SELECT * FROM task LIMIT 10 OFFSET $page1;");
 			$result1 = pg_query($db, "SELECT * FROM task;");
@@ -210,6 +211,7 @@ session_start();
 							<p>        <form action="createBid.php" method="POST" >
 								<input type = "hidden" name = "user" value = <?php echo $row["username"] ?> />
 								<input type = "hidden" name = "taskid" value = <?php echo $row["taskid"] ?> />
+								<input type = "hidden" name = "price" value = <?php echo $row["price"] ?> />
 								<button class="w3-button w3-white w3-border w3-border-blue" type="submit" name = "accept">
 									<i class=" "></i> Bid!
 								</button>
@@ -221,7 +223,7 @@ session_start();
 		</div></p>
 
 		<?php 
-	}
+	//}
 
 	$count = pg_num_rows($result1);
 	$pages = ceil($count/10);
