@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
@@ -32,12 +33,137 @@ body, html {
 <!-- Header with full-height image -->
 <header class="bgimg-1 w3-display-container w3-grayscale-min" id="home">
   <div class="w3-display-left w3-text-black" style="padding:48px">
-    <span class="w3-jumbo w3-hide-small">Start something that matters</span><br>
+    <span class="w3-jumbo w3-hide-small">Start something that matters!</span><br>
     <span class="w3-xxlarge w3-hide-large w3-hide-medium">Start something that matters</span><br>
     <span class="w3-large">Stop doing everything yourself and get help from others.</span>
     <p><a href="Registration.php" class="w3-button w3-black w3-padding-large w3-large w3-margin-top w3-opacity w3-hover-opacity-off">Register now and start today</a></p>
-  </div> 
+  </div>
 </header>
+
+<div class="container">
+    <div class="row">
+
+        <center> <h2> Most popular tasker! </h2> </center>
+    
+            <div class="col-sm-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <center>Housing Agent</center>
+                    </div>
+                    <div class="panel-body">
+                        <?php
+
+                            $db = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
+                            $query = "SELECT username FROM popular_housing_agent";
+                            $result = pg_query($db, $query);
+                            $data = pg_fetch_assoc($result);
+                            echo $data["username"];
+
+                        ?>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <center>Miscellaneous</center>
+                    </div>
+                    <div class="panel-body">
+                        <?php
+
+                            $db = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
+                            $query = "SELECT username FROM popular_miscellaneous";
+                            $result = pg_query($db, $query);
+                            $data = pg_fetch_assoc($result);
+                            echo $data["username"];
+
+                        ?>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <center>Car Washing</center>
+                    </div>
+                    <div class="panel-body">
+                        <?php
+
+                            $db = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
+                            $query = "SELECT username FROM popular_car_washing";
+                            $result = pg_query($db, $query);
+                            $data = pg_fetch_assoc($result);
+                            echo $data["username"];
+
+                        ?>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+    <div class="row">
+    
+            <div class="col-sm-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <center>Holiday Planner</center>
+                    </div>
+                    <div class="panel-body">
+                        <?php
+
+                            $db = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
+                            $query = "SELECT username FROM popular_holiday_planner";
+                            $result = pg_query($db, $query);
+                            $data = pg_fetch_assoc($result);
+                            echo $data["username"];
+
+                        ?>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <center>Home</center>
+                    </div>
+                    <div class="panel-body">
+                        <?php
+
+                            $db = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
+                            $query = "SELECT username FROM popular_home";
+                            $result = pg_query($db, $query);
+                            $data = pg_fetch_assoc($result);
+                            echo $data["username"];
+
+                        ?>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <center>Education</center>
+                    </div>
+                    <div class="panel-body">
+                        <?php
+
+                            $db = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
+                            $query = "SELECT username FROM popular_education";
+                            $result = pg_query($db, $query);
+                            $data = pg_fetch_assoc($result);
+                            echo $data["username"];
+
+                        ?>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+
 <?php
     include 'footer.html';
 ?>
