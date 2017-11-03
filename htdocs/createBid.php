@@ -45,7 +45,6 @@ session_start();
                 echo "<script>
                   alert('Bid a price higher than the stated price');
                   </script>";
-                //echo "bidded price: " . $_POST[amount] . "    " . "stated price: " . $price; 
             }
         }
          
