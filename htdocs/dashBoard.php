@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <?php
 	session_start();
-  $db = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
-  $curUser = $_SESSION["user"];
 ?>
 <html>
 <title>CS2102 Assignment</title>
@@ -53,17 +51,15 @@ body, html {
 			<li class="active"><a href="#section1">Dashboard</a></li>
 	  <?php
 	  if(isset($_SESSION['isAdmin'])) {
-		    echo '<li><a href="createTask.php">Create new task</a></li>';
 			echo '<li><a href="viewAllTasks.php">View All Tasks</a></li>';
 			echo '<li><a href="viewAllUsers.php">View All Users</a></li>';
-			echo '<li><a href="changePass.php">Change password</a></li>';
+			echo '<li><a href="changePassword.html">Change password</a></li>';
 			echo '<li><a href="logout.php">Logout</a></li>';
 	  } else {
 
 			echo '<li><a href="createTask.php">Create new task</a></li>';
 			echo '<li><a href="viewTask.php">View your task</a></li>';
-      			echo '<li><a href="viewBid.php">View your bid</a></li>';
-			echo '<li><a href="changePass.php">Change password</a></li>';
+			echo '<li><a href="changePassword.html">Change password</a></li>';
 			echo '<li><a href="logout.php">Logout</a></li>';
 		}
 	  ?>
@@ -85,6 +81,8 @@ body, html {
           </tr>
           <tbody>
             <?php 
+              $db = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
+              $curUser = $_SESSION["user"];
               $result = pg_query($db, "SELECT * FROM task t
                 WHERE (t.startDate >= date_trunc('week', CURRENT_TIMESTAMP)
                 AND t.startDate < date_trunc('week', CURRENT_TIMESTAMP + interval '1 week')
@@ -115,23 +113,14 @@ body, html {
           <div class="well">
             <h4>Completed</h4>
             <?php
-              
-              /**
-              $result = pg_query($db, "SELECT COUNT (*) AS total FROM task t, bid b
-                WHERE t.enddate < date_trunc('day', CURRENT_TIMESTAMP)
-                AND t.username = '$curUser'
-                AND b.taskOwner = '$curUser'
-                AND b.status = 'Accepted';"); //query for task that have pass the end date
-
-                <!-- Remeber to update the stored procedure. Refer to stored procedure code!-->
-              **/
-              
-              $result = pg_query($db, "SELECT COUNT (*) FROM dashboard_completed_task('$curUser');");
-
+               $db = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
+               $curUser = $_SESSION["user"];
+              $result = pg_query($db, "SELECT COUNT (*) AS total FROM task t
+                WHERE t.enddate < date_trunc('day', CURRENT_TIMESTAMP) AND t.username = '$curUser';"); //query for task that have pass the end date
               $data = pg_fetch_assoc($result);
 
-              if ($data["count"] > 0) {
-                echo "<p> ". $data["count"] ." </p>";
+              if ($data["total"] > 0) {
+                echo "<p> ". $data["total"] ." </p>";
               } else {
                 echo "No task completed.";
               }
@@ -143,12 +132,12 @@ body, html {
           <div class="well">
             <h4>Accepted</h4>
             <?php
+               $db = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
+               $curUser = $_SESSION["user"];
               $result = pg_query($db, "SELECT COUNT (*) AS total FROM task t, bid b 
                 WHERE t.username = '$curUser' 
                 AND b.taskOwner = '$curUser'
-                AND b.status = 'Accepted'
-                AND t.taskid = b.taskid
-                AND t.username = b.taskowner;"); //query for task that have pass the end date
+                AND b.status = 'Accepted';"); //query for task that have pass the end date
               $data = pg_fetch_assoc($result);
 
               if ($data["total"] > 0) {
@@ -164,8 +153,8 @@ body, html {
           <div class="well">
             <h4>Bidded</h4>
             <?php
-
-               
+               $db = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
+               $curUser = $_SESSION["user"];
               $result = pg_query($db, "SELECT COUNT (*) AS total FROM account a, bid b 
                 WHERE a.username = '$curUser' AND a.username = b.bidder"); //query for task that have pass the end date
               $data = pg_fetch_assoc($result);
@@ -181,15 +170,8 @@ body, html {
         </div>
         <div class="col-sm-3">
           <div class="well">
-            <h4>Amount Earned</h4>
-            <!-- Sum of completed task prices !-->
-            <?php
-
-              $result = pg_query($db, "SELECT SUM(price) FROM dashboard_completed_task('$curUser');");
-              $data = pg_fetch_assoc($result);
-
-              echo "<p> $". $data["sum"] ." </p>";
-            ?>
+            <h4>Ratio</h4>
+            <p>30%</p> 
           </div>
         </div>
       </div>

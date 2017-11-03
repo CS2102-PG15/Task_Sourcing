@@ -102,11 +102,11 @@ body, html {
             <label>Task Type</label>
             <select class="w3-input w3-border" required name = "tasktype">
             <option selected value = "" disabled> --- Select Task Type --- </option>
-            <option value = "Miscellaneous"> Miscellaneous </option>
-            <option value = "Housing Agent"> Housing Agent </option>
+            <option value = "Miscellanous "> Miscellanous </option>
+            <option value = "Housing Agent "> Housing Agent </option>
             <option value = "Car Washing"> Car Washing </option>
-            <option value = "Education"> Education </option>
-            <option value = "Holiday Planner"> Holiday Planner </option>
+            <option value = "Education "> Education </option>
+            <option value = "Holiday Planner "> Holiday Planner </option>
             <option value = "Home"> Home </option>
             </select>
           </div>
@@ -128,11 +128,7 @@ body, html {
     // Connect to database. Change pw and dbname as accordingly
     $db     = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
     $rn = $_SESSION['user']; // current session user
-    $result = pg_query($db, "SELECT createTask('$rn', '$_POST[tasktitle]', '$_POST[taskdescription]',
-						'$_POST[tasktype]', '$_POST[taskprice]', '$_POST[starttaskdate]', '$_POST[starttasktime]', '$_POST[endtaskdate]',
-						'$_POST[endtasktime]')");
-	//$result = pg_query($db, "INSERT INTO task (userName, title, description, type, startDate, endDate, startTime, endTime, price) VALUES ('$rn', '$_POST[tasktitle]', '$_POST[taskdescription]', '$_POST[tasktype]', '$_POST[starttaskdate]', '$_POST[endtaskdate]', '$_POST[starttasktime]', '$_POST[endtasktime]', '$_POST[taskprice]')");
-	
+    $result = pg_query($db, "INSERT INTO task (userName, title, description, type, startDate, endDate, startTime, endTime, price) VALUES ('$rn', '$_POST[tasktitle]', '$_POST[taskdescription]', '$_POST[tasktype]', '$_POST[starttaskdate]', '$_POST[endtaskdate]', '$_POST[starttasktime]', '$_POST[endtasktime]', '$_POST[taskprice]')");
 
     if(!$result) {
       echo "<script>
