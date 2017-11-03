@@ -55,73 +55,24 @@ CREATE OR REPLACE FUNCTION createTask(userName VARCHAR(64), title VARCHAR(255),	
 	END;
 	$$ LANGUAGE plpgsql;
 
+-- update bid status - stored procedure
+CREATE OR REPLACE FUNCTION updateBidStatus()
+RETURNS TRIGGER AS $bid_table$
+BEGIN
+   IF NEW.status = 'Accepted' THEN
+   UPDATE bid SET status = 'Rejected' WHERE status = 'Pending' AND taskid = NEW.taskid AND taskowner = NEW.taskowner;
+   END IF;
+   IF NEW.status = 'Pending' THEN
+   UPDATE bid SET status = 'Pending' WHERE status = 'Rejected' AND taskid = NEW.taskid AND taskowner = NEW.taskowner;
+   END IF;
+   RETURN NEW;
+END;
+$bid_table$ LANGUAGE plpgsql;
 
+--update bid status - trigger
+CREATE TRIGGER updateOtherBids 
+AFTER UPDATE
+ON bid
+FOR EACH ROW 
+EXECUTE PROCEDURE updateBidStatus();
 
---Popular Views
-CREATE OR REPLACE VIEW popular_housing_agent AS
-SELECT t.username FROM bid b, task t
-WHERE t.taskid = b.taskid 
-AND t.username = b.taskowner
-AND t.type = 'Housing Agent'
-GROUP BY t.taskid, t.username HAVING COUNT (*) >= ALL 
-(SELECT COUNT (*) FROM bid b2, task t2 
-	WHERE t2.taskid = b2.taskid 
-    AND t2.username = b2.taskowner 
-    AND t2.type = 'Housing Agent' GROUP BY t2.taskid);
-
-CREATE OR REPLACE VIEW popular_miscellaneous AS
-SELECT t.username FROM bid b, task t
-WHERE t.taskid = b.taskid 
-AND t.username = b.taskowner
-AND t.type = 'Miscellaneous'
-GROUP BY t.taskid, t.username HAVING COUNT (*) >= ALL 
-(SELECT COUNT (*) FROM bid b2, task t2 
-	WHERE t2.taskid = b2.taskid 
-    AND t2.username = b2.taskowner 
-    AND t2.type = 'Miscellaneous' GROUP BY t2.taskid);
-
-CREATE OR REPLACE VIEW popular_car_washing AS
-SELECT t.username FROM bid b, task t
-WHERE t.taskid = b.taskid 
-AND t.username = b.taskowner
-AND t.type = 'Car Washing'
-GROUP BY t.taskid, t.username HAVING COUNT (*) >= ALL 
-(SELECT COUNT (*) FROM bid b2, task t2 
-	WHERE t2.taskid = b2.taskid 
-    AND t2.username = b2.taskowner 
-    AND t2.type = 'Car Washing' GROUP BY t2.taskid);
-
-CREATE OR REPLACE VIEW popular_holiday_planner AS
-SELECT t.username FROM bid b, task t
-WHERE t.taskid = b.taskid 
-AND t.username = b.taskowner
-AND t.type = 'Holiday Planer'
-GROUP BY t.taskid, t.username HAVING COUNT (*) >= ALL 
-(SELECT COUNT (*) FROM bid b2, task t2 
-	WHERE t2.taskid = b2.taskid 
-    AND t2.username = b2.taskowner 
-    AND t2.type = 'Holiday Planer' GROUP BY t2.taskid);
-
-
-CREATE OR REPLACE VIEW popular_education AS
-SELECT t.username FROM bid b, task t
-WHERE t.taskid = b.taskid 
-AND t.username = b.taskowner
-AND t.type = 'Education'
-GROUP BY t.taskid, t.username HAVING COUNT (*) >= ALL 
-(SELECT COUNT (*) FROM bid b2, task t2 
-	WHERE t2.taskid = b2.taskid 
-    AND t2.username = b2.taskowner 
-    AND t2.type = 'Education' GROUP BY t2.taskid);
-
-
-CREATE OR REPLACE VIEW popular_home AS
-SELECT t.username FROM bid b, task t
-WHERE t.taskid = b.taskid 
-AND t.username = b.taskowner
-AND t.type = 'Home'
-GROUP BY t.taskid, t.username HAVING COUNT (*) >= ALL 
-(SELECT COUNT (*) FROM bid b2, task t2 
-	WHERE t2.taskid = b2.taskid 
-    AND t2.username = b2.taskowner 
-    AND t2.type = 'Home' GROUP BY t2.taskid);

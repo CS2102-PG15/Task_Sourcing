@@ -1,19 +1,14 @@
 
   <?php
       session_start();
-      //$_SESSION['Username']= 'damien';
-
       $accept = $_POST[accept];
       $accept_explode = explode('//', $accept);
       $taskid = $accept_explode[1];
       $bidder = $accept_explode[0];
 
       // Connect to the database. Please change the password and dbname in the following line accordingly
-          $db     = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
-  //  if(isset($_POST['accept'])) {
+      $db     = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
       $result1 = pg_query($db, "UPDATE bid SET status = 'Accepted' WHERE bidder = '$bidder' AND taskid = '$taskid' AND taskowner = '$_SESSION[user]' ");
-      $result2 = pg_query($db, "UPDATE bid SET status = 'Rejected' WHERE bidder <> '$bidder' AND taskid = '$taskid' AND taskowner = '$_SESSION[user]' ");
-   // }
 ?>
 <!DOCTYPE html>
 <html>
@@ -46,14 +41,12 @@ body, html {
         <div class="col-sm-12">
           <div class="panel panel-info">
 <?php 
-          if(!$result1 && !$result2) {
+          if(!$result1) {
             echo '<p>Bid not successful!</p> ';
           }
           else {
             echo '<p>Bid successful!</p>';
-
           }
-  
 ?>
         </div>
       </div>
@@ -61,7 +54,6 @@ body, html {
     </div>
   </p>
   </div>
-
 </body>
 
 <!-- Footer -->
