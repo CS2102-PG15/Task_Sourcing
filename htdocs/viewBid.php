@@ -46,7 +46,7 @@ body, html {
       <p><div class="container">   
       <div class="row">
         <div class="col-sm-12">
-          <div class="panel panel-info">
+
 <?php 
           if(!$result) {
             echo '<p>You have no created task!</p> </div> </div> </div>';
@@ -58,14 +58,14 @@ body, html {
 
               if ($row[status] == 'Pending') {
                 echo '<div class="panel panel-info">
-                        <div class="panel-heading"><b>'.$taskTableResults["title"].'</b></div>
-                        <div class="panel-body">
-                          Tasker: '.$row["taskowner"]. '</br>
-                          Status: '.$row["status"]. '</br>
-                          Bid Date: '.$row["biddate"]. '</br>
-                          Bid Amount: '.$row["bidamt"]. '</br></br>
-                        </div>
-                      </div>';
+                <div class="panel-heading"><b>'.$taskTableResults["title"].'</b></div>
+                <div class="panel-body">
+                  Tasker: '.$row["taskowner"]. '</br>
+                  Status: '.$row["status"]. '</br>
+                  Bid Date: '.$row["biddate"]. '</br>
+                  Bid Amount: '.$row["bidamt"]. '</br></br></div>
+                  </div>
+                </div>';
               } else if ($row[status] == 'Accepted') {
                 echo '<div class="panel panel-success">
                       <div class="panel-heading"><b>'.$taskTableResults["title"].'</b></div>
