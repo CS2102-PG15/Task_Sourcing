@@ -1,10 +1,22 @@
 
+
   <?php
       session_start();
       // Connect to the database. Please change the password and dbname in the following line accordingly
      // $_SESSION["user"] = 'damien';
           $db     = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
           $result = pg_query($db, "SELECT * FROM task WHERE username = '$_SESSION[user]'");
+
+        if(isset($_POST['delete'])) {
+
+    	pg_query($db, "DELETE FROM bid WHERE taskid = '$_POST[delete]' AND taskowner = '$_POST[user]'");
+    	pg_query($db, "DELETE FROM task WHERE taskid = '$_POST[delete]' AND username = '$_POST[user]'");
+
+    	echo "<script>
+    		alert('Task deleted!');
+    		location.href = 'viewTask.php';
+    	</script>";
+    }
   ?> 
 
 <!DOCTYPE html>
@@ -75,6 +87,15 @@ body, html {
 		    <input type = "hidden" name = "user" value = '.$_SESSION[user].' />
             <button class="w3-button w3-white w3-border w3-border-blue" type="submit" name = "taskid" value="'.$row['taskid'].'"">
                 <i class=" "></i> Edit task
+            </button>
+          </div>
+        </form>
+        
+        <form action="viewTask.php" method="POST">
+          <div>
+		    <input type = "hidden" name = "user" value = '.$_SESSION[user].' />
+            <button class="w3-button w3-white w3-border w3-border-blue" type="submit" name = "delete" value="'.$row['taskid'].'"">
+                <i class=" "></i> Delete task
             </button>
           </div>
         </form>
