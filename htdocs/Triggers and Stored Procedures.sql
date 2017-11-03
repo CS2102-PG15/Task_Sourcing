@@ -76,3 +76,71 @@ ON bid
 FOR EACH ROW 
 EXECUTE PROCEDURE updateBidStatus();
 
+--Popular Views
+CREATE OR REPLACE VIEW popular_housing_agent AS
+SELECT t.username FROM bid b, task t
+WHERE t.taskid = b.taskid 
+AND t.username = b.taskowner
+AND t.type = 'Housing Agent'
+GROUP BY t.taskid, t.username HAVING COUNT (*) >= ALL 
+(SELECT COUNT (*) FROM bid b2, task t2 
+	WHERE t2.taskid = b2.taskid 
+    AND t2.username = b2.taskowner 
+    AND t2.type = 'Housing Agent' GROUP BY t2.taskid);
+
+CREATE OR REPLACE VIEW popular_miscellaneous AS
+SELECT t.username FROM bid b, task t
+WHERE t.taskid = b.taskid 
+AND t.username = b.taskowner
+AND t.type = 'Miscellaneous'
+GROUP BY t.taskid, t.username HAVING COUNT (*) >= ALL 
+(SELECT COUNT (*) FROM bid b2, task t2 
+	WHERE t2.taskid = b2.taskid 
+    AND t2.username = b2.taskowner 
+    AND t2.type = 'Miscellaneous' GROUP BY t2.taskid);
+
+CREATE OR REPLACE VIEW popular_car_washing AS
+SELECT t.username FROM bid b, task t
+WHERE t.taskid = b.taskid 
+AND t.username = b.taskowner
+AND t.type = 'Car Washing'
+GROUP BY t.taskid, t.username HAVING COUNT (*) >= ALL 
+(SELECT COUNT (*) FROM bid b2, task t2 
+	WHERE t2.taskid = b2.taskid 
+    AND t2.username = b2.taskowner 
+    AND t2.type = 'Car Washing' GROUP BY t2.taskid);
+
+CREATE OR REPLACE VIEW popular_holiday_planner AS
+SELECT t.username FROM bid b, task t
+WHERE t.taskid = b.taskid 
+AND t.username = b.taskowner
+AND t.type = 'Holiday Planer'
+GROUP BY t.taskid, t.username HAVING COUNT (*) >= ALL 
+(SELECT COUNT (*) FROM bid b2, task t2 
+	WHERE t2.taskid = b2.taskid 
+    AND t2.username = b2.taskowner 
+    AND t2.type = 'Holiday Planer' GROUP BY t2.taskid);
+
+
+CREATE OR REPLACE VIEW popular_education AS
+SELECT t.username FROM bid b, task t
+WHERE t.taskid = b.taskid 
+AND t.username = b.taskowner
+AND t.type = 'Education'
+GROUP BY t.taskid, t.username HAVING COUNT (*) >= ALL 
+(SELECT COUNT (*) FROM bid b2, task t2 
+	WHERE t2.taskid = b2.taskid 
+    AND t2.username = b2.taskowner 
+    AND t2.type = 'Education' GROUP BY t2.taskid);
+
+
+CREATE OR REPLACE VIEW popular_home AS
+SELECT t.username FROM bid b, task t
+WHERE t.taskid = b.taskid 
+AND t.username = b.taskowner
+AND t.type = 'Home'
+GROUP BY t.taskid, t.username HAVING COUNT (*) >= ALL 
+(SELECT COUNT (*) FROM bid b2, task t2 
+	WHERE t2.taskid = b2.taskid 
+    AND t2.username = b2.taskowner 
+    AND t2.type = 'Home' GROUP BY t2.taskid);
