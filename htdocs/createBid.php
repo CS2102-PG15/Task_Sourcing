@@ -38,13 +38,14 @@ session_start();
                     else
                       alert('Bid unsuccessful!'); 
                   </script>";
-                  //$echo1 = $command;
+                  $echo1 = $command;
                   //$echo1 = '<p>Bid Unsuccesssful! Try again!</p>';         
               }  
             } else {
                 echo "<script>
                   alert('Bid a price higher than the stated price');
                   </script>";
+                //echo "bidded price: " . $_POST[amount] . "    " . "stated price: " . $price; 
             }
         }
          
@@ -93,6 +94,14 @@ session_start();
                     End Time: <?php echo $row["endtime"]; ?></br>
                     Price: $<?php echo $row["price"]; ?></br>
                     Description: <?php echo $row["description"]; ?></br></br>
+                    <?php 
+                    $highestBid = pg_query($db, "SELECT bidamt FROM bid WHERE taskid=$taskid AND taskowner='$taskcreator' AND bidamt >= ALL(SELECT bidamt FROM bid WHERE taskid=$taskid AND taskowner='$taskcreator')");
+                    $row = pg_fetch_assoc($highestBid);
+                    $highest = $row["bidamt"];
+                    if ($highest=="")
+                      $highest = 0;
+                    ?>
+                    Current highest bid is <b><?php echo "$" . $highest ?></b>
                   </div>
                 </div>
               </div>
@@ -102,7 +111,7 @@ session_start();
             <div class="w3-content" align="center">
               <form action="createBid.php" method="POST" >
                 <p><input type="hidden" name="task" value = "<?php echo $taskid ?>"></p>
-                <p><input type="hidden" name="tasker" value = "<?php echo $row["username"] ?>"></p>
+                <p><input type="hidden" name="tasker" value = "<?php echo $taskcreator ?>"></p>
                 <p><input type="hidden" name="price" value = "<?php echo $price ?>"></p>
                 <p><input class="w3-input w3-border" type="number" placeholder="Amount" name="amount"></p>
                 <p>
@@ -112,6 +121,7 @@ session_start();
                   </button>
                 </p>
               </form>
+            <?php echo $echo1; ?>
             </div>
           </div>
         </div>  
