@@ -38,12 +38,3 @@ CREATE TABLE bid(
 	PRIMARY KEY (bidID,taskID,bidder),
 	FOREIGN KEY (taskID,taskOwner) REFERENCES task(taskID,userName) ON DELETE CASCADE
 );
-
-
---Add User Stored Procedure
-CREATE FUNCTION add_user(userName VARCHAR(64), email VARCHAR(128), pw VARCHAR(255),  firstName VARCHAR(128), lastName VARCHAR(32), dob DATE, gender VARCHAR(6), isAdmin boolean) 
-    RETURNS void AS $$
-    BEGIN
-      INSERT INTO account VALUES (username,email,pw,firstName,lastName,dob,gender,isAdmin);
-    END;
-    $$ LANGUAGE plpgsql;

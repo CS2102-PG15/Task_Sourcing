@@ -65,10 +65,21 @@ body, html {
 					<th>End Time</th>
 					<th>Price</th>
 					<th>Description</th>
+					<th>Total Bids</th>
 					<th>Edit</th>
 					<th>Delete</th>
 					</tr>';
             while($row = pg_fetch_assoc($result)) {   //Creates a loop to loop through results
+		    		$taskid = $row["taskid"];
+            			$taskowner = $row["username"];
+		    		$totalBid = pg_query($db, "SELECT COUNT(*) FROM bid WHERE taskid = {$taskid} AND taskowner = '$taskowner'");
+				$count = 0;
+				if (!$totalBid) {
+					echo pg_last_error();
+				} else {
+					$row1 = pg_fetch_assoc($totalBid);
+					$count = $row1["count"];
+				}
 				echo '<tr>
 				<th>'.$index.'</th>
 				<th>'.$row["username"].'</th>
@@ -80,6 +91,7 @@ body, html {
 				<th>'.$row["endtime"].'</th>
 				<th>'.$row["price"].'</th>
 				<th>'.$row["description"].'</th>
+				<th>'.$count.'</th>
 				<th>
 				<form action="editTask.php" method = "POST">
 					<input type = "hidden" name = "user" value = "'.$row["username"].'" />
@@ -98,9 +110,19 @@ body, html {
 					</button>
 				</form>
 				</th>
+				<th>
+				<form action="viewAllBid.php" method = "POST">
+					<input type = "hidden" name = "user" value = "'.$row["username"].'" />
+					<input type = "hidden" name = "taskid" value = "'.$row["taskid"].'" />
+					<button class="w3-button w3-white w3-border w3-border-blue" type="submit" name = "Display">
+                			<i class=" "></i> Bids
+				</button>
+				</form>
+				</th>
 					</tr>';
 					$index++;
 		  }
+		  echo '</table>';
             }
 ?>
          </div>
@@ -109,8 +131,6 @@ body, html {
       </div>
     </p>
     </div>
-
-
 </body>
 
 <!-- Footer -->
