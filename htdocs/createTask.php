@@ -128,8 +128,9 @@ body, html {
     // Connect to database. Change pw and dbname as accordingly
     $db     = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
     $rn = $_SESSION['user']; // current session user
-    $result = pg_query($db, "INSERT INTO task (userName, title, description, type, startDate, endDate, startTime, endTime, price) VALUES ('$rn', '$_POST[tasktitle]', '$_POST[taskdescription]', '$_POST[tasktype]', '$_POST[starttaskdate]', '$_POST[endtaskdate]', '$_POST[starttasktime]', '$_POST[endtasktime]', '$_POST[taskprice]')");
-
+    $result = pg_query($db, "SELECT createTask('$rn', '$_POST[tasktitle]', '$_POST[taskdescription]',
+						'$_POST[tasktype]', '$_POST[taskprice]', '$_POST[starttaskdate]', '$_POST[starttasktime]', '$_POST[endtaskdate]',
+						'$_POST[endtasktime]')");
     if(!$result) {
       echo "<script>
               var startDate = new Date('$_POST[starttaskdate]');

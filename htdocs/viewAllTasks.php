@@ -122,6 +122,7 @@ body, html {
 					</tr>';
 					$index++;
 		  }
+		  echo '</table>';
             }
 ?>
          </div>
@@ -130,8 +131,6 @@ body, html {
       </div>
     </p>
     </div>
-
-
 </body>
 
 <!-- Footer -->

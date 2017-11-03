@@ -9,6 +9,7 @@
         $db     = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
         $result = pg_query($db, "SELECT * FROM task WHERE taskID = '$taskid' AND userName = '$taskcreator'");
         $row = pg_fetch_assoc($result);
+		date_default_timezone_set('Asia/Singapore');
         $date = date("Y/m/d");
 		
       if (isset($_POST['bid'])) { 
