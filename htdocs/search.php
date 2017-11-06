@@ -221,7 +221,6 @@ session_start();
 		</div></p>
 
 		<?php 
-	//}
 
 	$count = pg_num_rows($result1);
 	$pages = ceil($count/10);
