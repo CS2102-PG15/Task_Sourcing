@@ -1,5 +1,4 @@
-
-  <?php
+<?php
       session_start();
       $accept = $_POST[accept];
       $accept_explode = explode('//', $accept);

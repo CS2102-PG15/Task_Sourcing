@@ -1,9 +1,5 @@
-
-
   <?php
       session_start();
-     // $_POST['user']= 'damien';
-    // $_POST['taskid'] = 1;
       // Connect to the database. Please change the password and dbname in the following line accordingly
           $db     = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
           $result = pg_query($db, "SELECT * FROM bid WHERE taskid = '$_POST[taskid]' AND taskowner = '$_POST[user]'");
@@ -83,44 +79,8 @@ body, html {
           </tr>';
           $index++;
       }
-           echo '</table>';
-            }
-?>
-
-
-
-<?php /*
-
-            while($row = pg_fetch_assoc($result)){   //Creates a loop to loop through results
-  
-            echo '<div class="panel-heading"><b>'.$row["title"].'</b></div>
-            <div class="panel-body">
-              Bidder: '.$row["bidder"]. '</br>
-              Status: '.$row["status"]. '</br>
-              Bid Amount: '.$row["bidamt"]. '</br>
-              Bid Date: '.$row["biddate"]. '</br>
-            </div>
-    <div class="w3-row-padding" style="margin-top:64px padding:128px 16px">
-      <div class="w3-content" align="center">
-      <tr>
-      <th>
-        <form action="editBid.php" method="POST" >
-        <input type = "hidden" name = "bidder" value = "'.$row["bidder"].'" />
-          <input type = "hidden" name = "taskid" value = "'.$row["taskid"].'" />
-            <button class="w3-button w3-white w3-border w3-border-blue" type="submit" name = "accept">
-                <i class=" "></i> Edit bid!
-            </button>
-        </form>
-        </th>
-        <th>
-                <form action="deleteBid.php" method="POST" >
-            <button class="w3-button w3-white w3-border w3-border-blue" type="submit" name = "accept" value = "'.$row["bidder"]. "//" .$row["taskid"].'">
-                <i class=" "></i> Delete bid!
-            </button>
-        </form></th></tr>
-      </div>
-    </div>';
-            }*/
+    echo '</table>';
+    }
 ?>
         </div>
       </div>

@@ -42,7 +42,7 @@ body, html {
 				if ($state == 0) {
 					$_SESSION['user'] = $_POST[Username];
 					$_SESSION['name'] = $_POST[Firstname] + $_POST[Lastname];
-			
+					$_SESSION["isAdmin"] = "False";
 					header("Location: dashBoard.php");
 					exit();
 				} else if ($state == 23505) { //Unique Constraint

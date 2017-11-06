@@ -1,5 +1,10 @@
+/***
+DONE BY: GROUP 15
+KHOR SHAO LIANG, DAMIEN SIM, TEO WEN ZONG, REBECCA TAN
+***/
+
 --Add User Stored Procedure
-CREATE FUNCTION add_user(userName VARCHAR(64), email VARCHAR(128), pw VARCHAR(255),  firstName VARCHAR(128), lastName VARCHAR(32), dob DATE, gender VARCHAR(6), isAdmin boolean) 
+CREATE OR REPLACE FUNCTION add_user(userName VARCHAR(64), email VARCHAR(128), pw VARCHAR(255),  firstName VARCHAR(128), lastName VARCHAR(32), dob DATE, gender VARCHAR(6), isAdmin boolean) 
     RETURNS void AS $$
     BEGIN
       INSERT INTO account VALUES (username,email,pw,firstName,lastName,dob,gender,isAdmin);
@@ -7,27 +12,6 @@ CREATE FUNCTION add_user(userName VARCHAR(64), email VARCHAR(128), pw VARCHAR(25
     $$ LANGUAGE plpgsql;
 
 --Dashboard Completed Task Statistic
-
-/** First Draft. DO NOT (NOT NEEDED TO) EXECUTE THIS. Kept for emergency revert purposes. Execute the below query instead **/
-CREATE FUNCTION dashboard_completed_task_count(userid VARCHAR(64))
-	RETURNS int AS
-	$func$
-	BEGIN
-	   RETURN (
-	   	SELECT COUNT(*)::int
-	   	FROM task t, bid b
-		WHERE t.enddate < date_trunc('day', CURRENT_TIMESTAMP)
-        AND t.taskid = b.taskid
-        AND t.username = b.taskowner
-		AND t.username = userid
-		AND b.taskOwner = userid
-        AND b.status = 'Accepted'
-	   );
-	END
-	$func$ LANGUAGE plpgsql;
-
-/** Actual **/
-
 CREATE OR REPLACE FUNCTION dashboard_completed_task(userid VARCHAR(64))
 	RETURNS TABLE (taskid INT, username VARCHAR(64), title VARCHAR(255), description VARCHAR(512),
                   type VARCHAR(64), price NUMERIC, startdate DATE, starttime TIME, enddate DATE, endtime TIME) AS $$

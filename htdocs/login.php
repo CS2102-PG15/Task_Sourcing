@@ -4,12 +4,11 @@
     // Connect to the database. Please change the password and dbname in the following line accordingly
     $db     = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");	
   if (isset($_POST['login'])) { 
-		//$password = password_hash($_POST[Password],PASSWORD_DEFAULT);
-        $check = pg_query($db, "SELECT pw, isAdmin FROM account WHERE username = '$_POST[Username]'");
+		$check = pg_query($db, "SELECT pw, isAdmin FROM account WHERE username = '$_POST[Username]'");
 		$checkData = pg_num_rows($check);
 
 		if ($checkData > 0) {
-			$hashedPw = pg_fetch_row($check); //Should this be a while loop?
+			$hashedPw = pg_fetch_row($check); 
 			
 			if (password_verify($_POST['Password'],$hashedPw[0])) {
 				if ($hashedPw[1] == "t") {
@@ -20,10 +19,10 @@
 				header("Location: dashBoard.php");
 				exit();   
 			} else {
-				$echo1 = '<p>Wrong password!</p>';
+				$message = '<p>Wrong password!</p>';
 			}
 		} else {
-			$echo1 = '<p>Wrong user!</p>';
+			$message = '<p>Wrong user!</p>';
 		}
     }
 ?> 
@@ -65,7 +64,7 @@ body, html {
           </button>
         </p>
       </form>
-      <?php echo $echo1; ?>
+      <?php echo $message; ?>
     </div>
   </div>
 </div>	

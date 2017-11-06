@@ -1,7 +1,5 @@
-
   <?php
       session_start();
-
 
       $accept = $_POST[accept];
       $accept_explode = explode('//', $accept);
@@ -10,9 +8,7 @@
 
       // Connect to the database. Please change the password and dbname in the following line accordingly
           $db     = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
-  //  if(isset($_POST['accept'])) {
       $result1 = pg_query($db, "DELETE FROM bid WHERE bidder = '$bidder' AND taskid = '$taskid'");
-   // }
 ?>
 <!DOCTYPE html>
 <html>

@@ -13,7 +13,7 @@
 	  }
 	  ?>
       <a href="search.php" class="w3-bar-item w3-button"><i class="fa fa-search"></i> SEARCH</a>
-      <a href="Credit.php" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CREDIT</a> <!-- Change this name? !-->
+      <a href="Credit.php" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CREDIT</a>
     </div>
   </div>
 </div>
