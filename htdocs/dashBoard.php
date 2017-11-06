@@ -54,7 +54,6 @@ body, html {
 	  <?php
 	  if(isset($_SESSION['isAdmin'])) {
 			echo '<li><a href="viewAllTasks.php">View All Tasks</a></li>';
-			echo '<li><a href="viewAllUsers.php">View All Users</a></li>';
 			echo '<li><a href="changePass.php">Change password</a></li>';
 			echo '<li><a href="logout.php">Logout</a></li>';
 	  } else {
@@ -115,16 +114,6 @@ body, html {
             <h4>Completed</h4>
             <?php
               
-              /**
-              $result = pg_query($db, "SELECT COUNT (*) AS total FROM task t, bid b
-                WHERE t.enddate < date_trunc('day', CURRENT_TIMESTAMP)
-                AND t.username = '$curUser'
-                AND b.taskOwner = '$curUser'
-                AND b.status = 'Accepted';"); //query for task that have pass the end date
-
-                <!-- Remeber to update the stored procedure. Refer to stored procedure code!-->
-              **/
-              
               $result = pg_query($db, "SELECT COUNT (*) FROM dashboard_completed_task('$curUser');");
 
               $data = pg_fetch_assoc($result);
@@ -184,7 +173,10 @@ body, html {
             <!-- Sum of completed task prices !-->
             <?php
 
-              $result = pg_query($db, "SELECT SUM(price) FROM dashboard_completed_task('$curUser');");
+              $result = pg_query($db, "SELECT SUM(b.bidamt) FROM dashboard_completed_task('$curUser') AS dct, bid AS b 
+                                       WHERE dct.taskid = b.taskid
+                                       AND dct.username = b.taskowner
+                                       AND b.status = 'Accepted';");
               $data = pg_fetch_assoc($result);
 
               echo "<p> $". $data["sum"] ." </p>";
