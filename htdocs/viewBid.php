@@ -49,7 +49,7 @@ body, html {
 
 <?php 
           if(!$result) {
-            echo '<p>You have no created task!</p> </div> </div> </div>';
+            echo '<p>You have no bid!</p>';
           }
             while($row = pg_fetch_assoc($result)){   //Creates a loop to loop through results
               $taskTitleQuery = "SELECT t.title FROM task t WHERE t.taskid = '$row[taskid]' AND t.username = '$row[taskowner]'";
@@ -58,14 +58,14 @@ body, html {
 
               if ($row[status] == 'Pending') {
                 echo '<div class="panel panel-info">
-                <div class="panel-heading"><b>'.$taskTableResults["title"].'</b></div>
-                <div class="panel-body">
-                  Tasker: '.$row["taskowner"]. '</br>
-                  Status: '.$row["status"]. '</br>
-                  Bid Date: '.$row["biddate"]. '</br>
-                  Bid Amount: '.$row["bidamt"]. '</br></br></div>
-                  </div>
-                </div>';
+                        <div class="panel-heading"><b>'.$taskTableResults["title"].'</b></div>
+                        <div class="panel-body">
+                          Tasker: '.$row["taskowner"]. '</br>
+                          Status: '.$row["status"]. '</br>
+                          Bid Date: '.$row["biddate"]. '</br>
+                          Bid Amount: $'.$row["bidamt"]. '</br></br>
+                        </div>
+                      </div>';
               } else if ($row[status] == 'Accepted') {
                 echo '<div class="panel panel-success">
                       <div class="panel-heading"><b>'.$taskTableResults["title"].'</b></div>
@@ -73,7 +73,7 @@ body, html {
                         Tasker: '.$row["taskowner"]. '</br>
                         Status: '.$row["status"]. '</br>
                         Bid Date: '.$row["biddate"]. '</br>
-                        Bid Amount: '.$row["bidamt"]. '</br></br>
+                        Bid Amount: $'.$row["bidamt"]. '</br></br>
                       </div>
                     </div>';
               } else {
@@ -83,7 +83,7 @@ body, html {
                           Tasker: '.$row["taskowner"]. '</br>
                           Status: '.$row["status"]. '</br>
                           Bid Date: '.$row["biddate"]. '</br>
-                          Bid Amount: '.$row["bidamt"]. '</br></br>
+                          Bid Amount: $'.$row["bidamt"]. '</br></br>
                         </div>
                       </div>';
               }
