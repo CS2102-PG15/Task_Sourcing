@@ -53,6 +53,7 @@ body, html {
 			<li class="active"><a href="#section1">Dashboard</a></li>
 	  <?php
 	  if(isset($_SESSION['isAdmin'])) {
+		  echo '<li><a href="createTask.php">Create new task</a></li>';
 			echo '<li><a href="viewAllTasks.php">View All Tasks</a></li>';
 			echo '<li><a href="changePass.php">Change password</a></li>';
 			echo '<li><a href="logout.php">Logout</a></li>';
