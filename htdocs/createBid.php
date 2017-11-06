@@ -11,6 +11,8 @@ session_start();
         $row = pg_fetch_assoc($result);
         date_default_timezone_set('Asia/Singapore');
         $date = date("Y/m/d");
+        $enddate = $row[enddate];
+        $enddate = date('Y/m/d', strtotime(str_replace('/','-', $enddate)));
 
         if (isset($_POST['bid'])) { 
 
@@ -113,13 +115,18 @@ session_start();
                 <p><input type="hidden" name="task" value = "<?php echo $taskid ?>"></p>
                 <p><input type="hidden" name="tasker" value = "<?php echo $taskcreator ?>"></p>
                 <p><input type="hidden" name="price" value = "<?php echo $price ?>"></p>
-                <p><input class="w3-input w3-border" type="number" placeholder="Amount" name="amount"></p>
-                <p>
-
-                  <button class="w3-button w3-white w3-border w3-border-blue" type="submit" name = "bid">
-                    <i class=" "></i> BID
-                  </button>
-                </p>
+                <?php
+                  if ($enddate > $date) { 
+                     echo "<p><input class=\"w3-input w3-border\" type=\"number\" placeholder=\"Amount\" name=\"amount\"></p>
+                           <p>
+                             <button class=\"w3-button w3-white w3-border w3-border-blue\" type=\"submit\" name = \"bid\">
+                               <i class=\" \"></i> BID
+                             </button>
+                           </p>";
+                  } else {
+                    echo "Task is not available for bidding.";
+                  }
+                ?>
               </form>
             <?php echo $echo1; ?>
             </div>
