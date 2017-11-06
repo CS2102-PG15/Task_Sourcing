@@ -1,15 +1,8 @@
 <!DOCTYPE html>
 <?php
 	session_start();
- // $taskid = $_POST['taskid'];
- // $user = $_POST['user'];
-    //  $accept = $_POST[accept];
-    //  $accept_explode = explode('//', $accept);
-    //  $taskid = $accept_explode[1];
-    //  $bidder = $accept_explode[0];
-
-      $taskid =$_POST['taskid'];
-      $bidder = $_POST['bidder'];
+    $taskid =$_POST['taskid'];
+    $bidder = $_POST['bidder'];
   // Connect to the database. Please change the password and dbname in the following line accordingly
   
   $db     = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
@@ -20,7 +13,6 @@
     // Connect to database. Change pw and dbname as accordingly
     $db     = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
     $rn = $_SESSION['user']; // current session user
-
 
     if($_POST['status']=='Pending'||$_POST['status']=='Rejected') {
       $query = "UPDATE bid SET status = '$_POST[status]', biddate = '$_POST[biddate]', bidamt = '$_POST[bidamt]'WHERE bidder = '$_POST[bidder]' AND taskid = '$_POST[taskid]'";

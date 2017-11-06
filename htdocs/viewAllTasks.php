@@ -1,4 +1,3 @@
-
   <?php
       session_start();
       // Connect to the database. Please change the password and dbname in the following line accordingly
@@ -68,6 +67,7 @@ body, html {
 					<th>Total Bids</th>
 					<th>Edit</th>
 					<th>Delete</th>
+					<th>View Bids</th>
 					</tr>';
             while($row = pg_fetch_assoc($result)) {   //Creates a loop to loop through results
 		    		$taskid = $row["taskid"];

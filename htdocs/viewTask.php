@@ -1,9 +1,6 @@
-
-
   <?php
       session_start();
       // Connect to the database. Please change the password and dbname in the following line accordingly
-     // $_SESSION["user"] = 'damien';
           $db     = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
           $result = pg_query($db, "SELECT * FROM task WHERE username = '$_SESSION[user]'");
 

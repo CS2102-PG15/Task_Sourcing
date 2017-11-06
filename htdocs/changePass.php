@@ -64,14 +64,14 @@ body, html {
         <div class="row">
           <div class="col-6">
             <span>New Password</span>
-            <input class="w3-input w3-border" type="text" placeholder="New Password" value="<?php echo $row['bidamt']; ?>" required name="newPass">
+            <input class="w3-input w3-border" type="password" placeholder="New Password" required name="newPass">
           </div>
         </div>
 
         <div class="row">
           <div class="col-6">
             <span>Retype New Password</span>
-            <input class="w3-input w3-border" type="text" placeholder="Retype New Password" value="<?php echo $row['bidamt']; ?>" required name="secondPass">
+            <input class="w3-input w3-border" type="password" placeholder="Retype New Password" required name="secondPass">
           </div>
         </div>
 

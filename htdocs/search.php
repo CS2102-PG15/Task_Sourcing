@@ -148,7 +148,6 @@ session_start();
 
 	<?php
 	$db     = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
-	//if (isset($_GET['search'])) {
 		$page = $_GET["page"];
 		if ($page =="" || $page == "1") {
 			$page1=0;
@@ -185,7 +184,6 @@ session_start();
 			}
 		}
 
-		//$db     = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
 		if ($string == "") {
 			$result = pg_query($db, "SELECT * FROM task LIMIT 10 OFFSET $page1;");
 			$result1 = pg_query($db, "SELECT * FROM task;");
@@ -223,7 +221,6 @@ session_start();
 		</div></p>
 
 		<?php 
-	//}
 
 	$count = pg_num_rows($result1);
 	$pages = ceil($count/10);

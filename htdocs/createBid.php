@@ -16,12 +16,6 @@ session_start();
 
         if (isset($_POST['bid'])) { 
 
-        /*$check1 = pg_query($db, "SELECT bidder FROM bid WHERE bidder = '$_SESSION[user]' AND taskid = $taskid");
-        $data = pg_fetch_assoc($check1);
-        if(pg_num_rows($data)>0) {
-          pg_query($db, "DELETE FROM bid WHERE bidder = '$_SESSION[user]' AND taskid = $taskid"); //remove duplicates for a specific task as 1 user can only bid once for each task
-        }*/
-
           if ($price <= $_POST[amount]){
               $delResult = pg_query($db, "DELETE FROM bid WHERE bidder = '$curruser' AND taskid = '$_POST[task]'"); //remove duplicates for a specific task as 1 user can only bid once for each task
 
@@ -30,7 +24,6 @@ session_start();
               $check = pg_query($db, $command);
               if($check) 
                   echo "<script> alert('Bid successful!'); </script>";
-                  //$echo1 = '<p>Bid Successful!</p>';
               else {
                   echo "<script>
                     var bidder = '$_SESSION[user]';
@@ -39,15 +32,12 @@ session_start();
                       alert('You cannot bid for your own task!');
                     else
                       alert('Bid unsuccessful!'); 
-                  </script>";
-                  $echo1 = $command;
-                  //$echo1 = '<p>Bid Unsuccesssful! Try again!</p>';         
+                  </script>";    
               }  
             } else {
                 echo "<script>
                   alert('Bid a price higher than the stated price');
                   </script>";
-                //echo "bidded price: " . $_POST[amount] . "    " . "stated price: " . $price; 
             }
         }
          

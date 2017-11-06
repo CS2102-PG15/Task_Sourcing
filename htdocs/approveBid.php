@@ -1,7 +1,5 @@
-
-  <?php
+<?php
       session_start();
-      //$_SESSION['Username']= 'damien';
       $_POST['taskid'] = $_POST['Display'];
       // Connect to the database. Please change the password and dbname in the following line accordingly
           $db     = pg_connect("host=localhost port=5432 dbname=CS2102 user=postgres password=root");
